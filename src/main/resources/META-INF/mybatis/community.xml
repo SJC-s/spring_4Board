@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="org.iclass.dao.CommunityMapper">
+ 	<!-- sql 실행에 필요한 값 또는 조회결과 값과 자바 객체를 매핑 
+ 		 id 는 매핑에 대한 식별자. 개발자가 정하는 것입니다. 세미콜론 쓰지 않음 주의-->
+ 	
+ 	<select id="selectAll" resultType="org.iclass.dto.CommunityDto">
+ 		SELECT * FROM community ORDER BY idx desc
+ 	</select> 
+ 	
+ 	<!-- 글 상세 보기 -->
+ 	<select id="selectByIdx" parameterType="int" resultType="org.iclass.dto.CommunityDto">
+ 		SELECT * FROM community WHERE idx = #{idx}
+ 	</select>
+	
+	<!-- 글작성 -->
+	<insert id="insert" parameterType="org.iclass.dto.CommunityDto" useGeneratedKeys="false">
+		<!-- 오라클은 idx를 시퀀스를 이용하여 값을 만든다-->
+		<!-- getter 메소드로 동작 -->
+		insert into community(idx, writer, title, content, ip) values (community_idx_seq.nextval, #{writer}, #{title}, #{content}, #{ip})
+		<!-- insert 후에 증가된 시퀀스값 (insert 된 idx값) 가져오기 : 파라미터 dto에 idx 필드에 저장-->
+		<selectKey keyProperty="idx" resultType="int" order="AFTER">
+			SELECT community_idx_seq.currval FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 글 수정(제목, 내용) -->
+	<update id="update" parameterType="org.iclass.dto.CommunityDto">
+		update community set title = #{title}, content = #{content} where idx = #{idx}
+	</update>
+		
+	
+	<!-- 글 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete from community where idx = #{idx}
+	</delete>
+	
+	
+	
+	
+	<!-- 글 전체 개수 -->
+	<select id="getCount" resultType="int" parameterType="int">
+		SELECT count(*) FROM community
+	</select>
+	
+	<!-- 댓글 개수 -->
+	<select id="getCommentCount" resultType="int" parameterType="int">
+		SELECT count(*) FROM COMMUNITYCOMMENTS WHERE MREF = #{idx}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="setReadCount" parameterType="int">
+		UPDATE COMMUNITY SET READCOUNT = READCOUNT +1 WHERE IDX = #{idx}
+	</update>
+	
+	<!-- 댓글갯수업데이트 -->
+	<update id="setCommentCount" parameterType="int">
+		UPDATE COMMUNITY SET COMMENTCOUNT = COMMENTCOUNT + 1 WHERE idx = #{idx}
+	</update>
+	
+	<!-- 댓글목록 -->
+	<select id="getCommentList" parameterType="int" resultType="org.iclass.dto.CommentDto">
+		SELECT * FROM COMMUNITYCOMMENTS WHERE MREF = #{idx}
+	</select>
+	
+	<!-- 페이지네이션 글 목록 -->
+	<select id="getList"  resultType="org.iclass.dto.CommunityDto" 
+	parameterType="org.iclass.dto.PageReqDto">
+		SELECT idx, writer, title, content, readcount, createdAt, ip, commentcount
+		FROM (SELECT rownum rnum, temp.* FROM (SELECT * FROM COMMUNITY c ORDER BY idx DESC) temp) 
+		WHERE rnum BETWEEN #{startNo} AND #{endNo}
+	</select>
+<!-- 
+namespace : community
+id
+- 글작성 : insert
+- 글수정 : update(제목, 내용)
+- 글삭제 : delete
+- 글상세보기 : selectByIdx
+- 글전체개수 : getCount
+- 조회수증가 : setReadCount
+- 댓글갯수업데이트 : setCommentCount
+- 댓글목록 : getCommentList (매퍼 xml을 따로 만들기)
+- 페이지네이션 글 목록 : getList
+ -->
+
+ <!-- ${} 는 출력 , #{} 값 전달 또는 저장(파라미터 변수명 표시. '' 가 자동으로 붙는다 - #{'custno'}) -->	
+ </mapper>
