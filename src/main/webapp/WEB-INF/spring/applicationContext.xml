@@ -19,7 +19,7 @@
 		<!-- 빈(객체)의 프로퍼티 설정하기(정해진 이름) : name -->
 		<property name="driverClass" value="${db.driver}"/>
 		<property name="url" value="${db.url}"/>
-		<property name="uesrname" value="${db.uesrname}"/>
+		<property name="username" value="${db.username}"/>
 		<property name="password" value="${db.password}"/>
 	</bean>
 	<!--4. mybatis-spring 에서 필요한 2개의 bean 정의 -->
