@@ -9,6 +9,7 @@ import org.iclass.dao.CommunityMapper;
 import org.iclass.dto.CommunityDto;
 import org.iclass.dto.PageReqDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +37,14 @@ public class CommuniyService {
 		map.put("pageDto", pageDto);
 		map.put("list", list);
 		return map;
+	}
+	
+	// 글 상세보기 : select, 조회수 증가 update
+	@Transactional // 트랜잭션 단위에 해당하는 sql 특히 insert, update, delete를 알아서 commit, rollback을 관리 해주는 애노테이션
+	public CommunityDto readOne(int idx) {
+		CommunityDto dto = mainDao.selectByIdx(idx);
+		mainDao.setReadCount(idx);
+		return dto;
 	}
 	
 }

@@ -36,22 +36,27 @@ public class CommunityController {
 		return "community/write";
 	}
 	@PostMapping("/write") // 
-	public String write(CommunityDto dto, Model model) {
+	public String write(CommunityDto dto) {
 		return "redirect:community/list";
 	}
 	
 	
 	@GetMapping("/modify") // 
-	public String modify(int page) {
+	public String modify(int idx, int page) {
 		return "community/modify";
 	}
 	@PostMapping("/modify") // 
-	public String modify(CommunityDto dto, Model model) {
+	public String modify(int page, CommunityDto dto, Model model) {
+		
+//		return "redirect:list";
 		return "redirect:modify";
 	}
 	
 	@GetMapping("/read") // 
 	public String read(int idx, @RequestParam(defaultValue = "1") int page, Model model) {
+		CommunityDto dto = service.readOne(idx);
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
 		return "community/read";
 	}
 	

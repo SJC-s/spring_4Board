@@ -1,0 +1,30 @@
+## 커뮤니티 게시판
+- spring webmvc
+	- 컨트롤러가 요청을 처리
+	- view 역할을 하는 jsp
+- 요청 경로 계획(설계)
+	1. 전체목록 - 페이지네이션, 검색
+		- /community/list
+			- 파라미터 : 페이지번호, 검색키워드
+	2. 글쓰기
+		- 화면 : /community/write (GET)
+			- 파라미터 : 페이지번호
+		- 글 저장 : /community/write (POST)
+			- 파라미터 : 사용자입력값e
+	3. 글 수정
+		- 화면 : /community/modify (GET)
+			- 파라미터 : 페이지번호
+		- 글 변경/저장 : /community/modify (POST)
+			- 파라미터 : 사용자입력값
+	4. 글 상세 보기
+		- /community/read (GET)
+			- 파라미터 : 글idx(PK), 페이지번호
+	5. 글 삭제
+		- /community/remove (POST)
+			- 파라미터 : 글idx(PK), 페이지번호
+	- POST 요청 처리 후에는 redirect 한다
+- 테스트 URL
+http://localhost:8090/spring_4Board/community/list
+http://localhost:8090/spring_4Board/community/write
+http://localhost:8090/spring_4Board/community/read?idx=33&page=3
+http://localhost:8090/spring_4Board/community/modify?idx=33&page=3
