@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-	1. 이 파일은 bean 설정 파일입니다. 어떤 라이브러리의 클래스들을 bean으로 만들어야 할때 사용합니다.
-	bean 태그로 정의한것이 1개의 싱글톤 bean으로 만들어 집니다. 
-	beans 태그 안에 xmlns 속성은 태그 사용을 위해 필요한 url 입니다.
-	웹 애플리케이션 프로젝트에서는 root-context.xml 에 ApplicationContext(spring-context) 가 생성해야 할 bean을 정의합니다.
-	이 파일은 web.xml에서 contextConfigLocation 파라미터로 지정됩니다.
--->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -18,6 +11,36 @@
 	<context:component-scan base-package="org.iclass"/> 
 	
 	<!-- MybatisAppConfig.java에서 했던 설정을 applicationContext.xml 형식으로 작성 -->
-
+	<!--2. db.properties 파일 위치 설정하기  -->
+	<context:property-placeholder location="classpath:META-INF/mybatis/db.properties"/>
+	<!--3. dataSource bean 정의  -->
+	<!-- id : bean의 이름(식별자, 중복X) -->
+	<bean id="datasource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<!-- 빈(객체)의 프로퍼티 설정하기(정해진 이름) : name -->
+		<property name="driverClass" value="${db.driver}"/>
+		<property name="url" value="${db.url}"/>
+		<property name="uesrname" value="${db.uesrname}"/>
+		<property name="password" value="${db.password}"/>
+	</bean>
+	<!--4. mybatis-spring 에서 필요한 2개의 bean 정의 -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 위에서 정의한 id="datasource" 를 setter 주입 -->
+		<property name="dataSource" ref="datasource"/>
+		<!-- 프로퍼티값을 문자열로 설정하므로 value 에 전달 -->
+		<property name="configLocation" value="classpath:META-INF/mybatis/mybatis-config.xml"/>
+		<property name="mapperLocations">
+			<!-- 프로퍼티 값을 list로 전달 -->
+			<list>
+				<value>classpath:META-INF/mybatis/community.xml</value>
+				<value>classpath:META-INF/mybatis/communityComments.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!-- sql 실행과 트랜잭션 관리를 위한 bean 정의 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean"/>
+	</bean>
 	
+	<!--5. mapper xml과 연동되는 mapper 인터페이스를 스캔할 패키지 설정하기 -->
+	<mybatis-spring:scan base-package="org.iclass.dao"/>
 </beans>
