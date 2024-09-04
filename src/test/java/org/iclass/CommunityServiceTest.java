@@ -1,4 +1,4 @@
-package spring_4Board;
+package org.iclass;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -28,7 +28,7 @@ public class CommunityServiceTest {
 		assertNotNull(service);
 	}
 	
-	@DisplayName("페이지 목록 자겨오기")
+	@DisplayName("페이지 목록 가져오기")
 	@Test
 	void list() {
 		// 페이지 번호로 인자로 전달하기

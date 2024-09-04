@@ -1,4 +1,4 @@
-package spring_4Board;
+package org.iclass;
 
 import static org.junit.jupiter.api.Assertions.*;
 
