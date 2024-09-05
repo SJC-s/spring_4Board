@@ -9,6 +9,6 @@
 <body>
 	<h1>커뮤니티</h1>
 	<hr>
-	<p>커뮤니티 게시판 프로젝트, 게시판 목록은 <a href="/community/list">커뮤니티</a> 클릭하세요</p>
+	<p>커뮤니티 게시판 프로젝트, 게시판 목록은 <a href="community/list">커뮤니티</a> 클릭하세요</p>
 </body>
 </html>
