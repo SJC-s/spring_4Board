@@ -28,7 +28,7 @@
 	
 	<!-- 글 수정(제목, 내용) -->
 	<update id="update" parameterType="org.iclass.dto.CommunityDto">
-		update community set title = #{title}, content = #{content} where idx = #{idx}
+		update community set title = #{title}, content = #{content}, ip=#{ip} where idx = #{idx}
 	</update>
 		
 	
