@@ -16,13 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 //@RequiredArgsConstructor // final 변수 커스텀 생성자를 만든다
-public class CommuniyService {
+public class CommunityService {
 	// 게시판 기능 서비스 - 메인글과 댓글은 하나의 기능 서비스도 1개
 	public final CommunityMapper mainDao; 
 	public final CommunityCommentsMapper cmtDao;
 	
 	// 생성자 주입
-	public CommuniyService(CommunityMapper mainDao, CommunityCommentsMapper cmtDao) {
+	public CommunityService(CommunityMapper mainDao, CommunityCommentsMapper cmtDao) {
 		this.mainDao = mainDao;
 		this.cmtDao = cmtDao;
 	}

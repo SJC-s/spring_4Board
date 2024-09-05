@@ -3,7 +3,7 @@ package org.iclass.controller;
 import java.util.Map;
 
 import org.iclass.dto.CommunityDto;
-import org.iclass.service.CommuniyService;
+import org.iclass.service.CommunityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CommunityController {
 	
-	private final CommuniyService service;
+	private final CommunityService service;
 	
 	@GetMapping("/list")
 	public String list(@RequestParam(defaultValue = "1") int page, String columns, String Keyword, Model model) { 

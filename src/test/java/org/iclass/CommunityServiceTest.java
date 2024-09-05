@@ -4,7 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Map;
 
-import org.iclass.service.CommuniyService;
+import org.iclass.service.CommunityService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CommunityServiceTest {
 	
 	@Autowired
-	CommuniyService service;
+	CommunityService service;
 	
 	@DisplayName("서비스 자동주입 확인하기")
 	@Test
