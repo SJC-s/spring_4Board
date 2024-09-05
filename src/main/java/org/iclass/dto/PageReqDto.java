@@ -13,17 +13,22 @@ public class PageReqDto {
 	private int startNo; // 페이지 글 목록의 시작 rownum
 	private int endNo; // 페이지 글 목록의 끝 rownum
 	
+	// 페이지리스트를 위한 속성(서비스에서 계산)
+	private int totalPages;
+	private int totalCount;
+	private int startPage;
+	private int endPage;
+	
+	// 검색을 위한 속성
+	private String column;
+	private String keyword;
+	
 	private PageReqDto() { }
 	
 	public static PageReqDto of(int page, int pageSize) {
-		int startNo = (page-1)*pageSize + 1;
-		int endNo = startNo + (pageSize-1);
-		
 		PageReqDto dto = new PageReqDto();
 		dto.setPage(page);
 		dto.setPageSize(pageSize);
-		dto.setStartNo(startNo);
-		dto.setEndNo(endNo);
 		return dto;
 	}
 }

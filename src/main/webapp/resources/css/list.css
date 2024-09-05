@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.pagenum {
+    border: 1px solid#79747E;
+    color: #79747E;
+    padding: 3px 5px;
+    text-decoration: none;  /*  밑줄제거  */
+    cursor: pointer;
+    display: inline-block;
+   text-align:center;
+   font-size: 9pt;
+   border-radius: 2px;
+}
+.pagenum:hover{
+     background-color:#79747E;
+     color:white;
+     font-weight: bold;
+} 
+
+.current {
+   background-color:gray;
+   color:rgb(255, 128, 255);
+}
